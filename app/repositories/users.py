@@ -3,11 +3,8 @@
 
 import uuid
 
-from app.models import Token
 from app.models import User
-from app.repositories.tokens import TokensRepository
 from app.weblib.db import expunged
-from app.weblib.db import joinedload
 
 
 class UsersRepository(object):
@@ -20,24 +17,13 @@ class UsersRepository(object):
                         User.session)
 
     @staticmethod
-    def add(acs_id, name, avatar):
+    def add(facebook_id, facebook_token):
         id = unicode(uuid.uuid4())
-        user = User(id=id, acs_id=acs_id, name=name, avatar=avatar)
+        user = User(id=id, facebook_id=facebook_id,
+                    facebook_token=facebook_token)
         return user
 
     @staticmethod
-    def refresh_token(user_id):
-        return TokensRepository.add(user_id)
-
-    @staticmethod
     def authorized_by(token):
-        return expunged(User.query.join(Token).filter(Token.id == token).\
-                                filter(User.deleted == False).first(),
-                        User.session)
-
-    @staticmethod
-    def with_acs_id(acs_id):
-        return expunged(User.query.\
-                                filter(User.acs_id == acs_id).\
-                                filter(User.deleted == False).first(),
+        return expunged(User.query.filter(User.facebook_token == token).first(),
                         User.session)
