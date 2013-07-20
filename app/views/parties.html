@@ -54,9 +54,7 @@
     <h1>Ongoing parties</h1>
 
     <div>
-        <ul class="nav nav-pills nav-stacked">
-            <li><a href="#đsd">party1</a></li>
-            <li><a href="#dsfds">party2</a></li>
+        <ul class="nav nav-pills nav-stacked" id="parties">
         </ul>
     </div>
 </div>
@@ -64,20 +62,24 @@
 
 <!-- Le javascript
 ================================================== -->
+
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="/static/bootstrap/js/jquery.js"></script>
-<script src="/static/bootstrap/js/bootstrap-transition.js"></script>
-<script src="/static/bootstrap/js/bootstrap-alert.js"></script>
-<script src="/static/bootstrap/js/bootstrap-modal.js"></script>
-<script src="/static/bootstrap/js/bootstrap-dropdown.js"></script>
-<script src="/static/bootstrap/js/bootstrap-scrollspy.js"></script>
-<script src="/static/bootstrap/js/bootstrap-tab.js"></script>
-<script src="/static/bootstrap/js/bootstrap-tooltip.js"></script>
-<script src="/static/bootstrap/js/bootstrap-popover.js"></script>
-<script src="/static/bootstrap/js/bootstrap-button.js"></script>
-<script src="/static/bootstrap/js/bootstrap-collapse.js"></script>
-<script src="/static/bootstrap/js/bootstrap-carousel.js"></script>
-<script src="/static/bootstrap/js/bootstrap-typeahead.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $.getJSON('/parties', function (data) {
+        var items = [];
+
+        $.each(data['parties'], function (key, val) {
+            console.log(key);
+            console.log(val);
+            items.push('<li id="' + val['id'] + '"><a href="#ds"><img style="height: 64px" src="' + val['photo'] + '" />' + ' ' + val['name'] + '</a></li>');
+        });
+    console.log(items);
+        $('#parties').html(items.join(''));
+    });
+
+</script>
 
 </body>
 </html>
