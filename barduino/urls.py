@@ -5,9 +5,13 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^login$', 'barduino.views.login', 'login'),
-    url(r'^parties$', 'barduino.views.parties', 'parties'),
-    url(r'^tubi$', 'barduino.views.tubi')
+    url(r'^login$', 'barduino.views.login', name='login'),
+    url(r'^parties$', 'barduino.views.parties', name='parties'),
+    url(r'^tubi$', 'barduino.views.tubi', name='tubi'),
+    url(r'^birini$', 'barduino.views.birini', name='birini'),
+    url(r'^start$', 'barduino.views.start', name='start'),
+    url(r'^q$', 'barduino.views.q', name='q'),
+    url(r'^(?P<path>.*)$', 'django.contrib.staticfiles.views.serve', name='static')
     # Examples:
     # url(r'^$', 'barduino.views.home', name='home'),
     # url(r'^barduino/', include('barduino.foo.urls')),
