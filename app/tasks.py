@@ -9,10 +9,19 @@ from app.config import DRINKS
 from app.celery import celery
 
 
-def process_comment(comment):
+def process_comment(access_token, comment):
     for drink in DRINKS:
         if drink[0].lower() in comment['message']:
-            raise ValueError(drink)
+            # Comment
+            comment_id = comment['id']
+            message = 'Cristo!'
+            resp = json.load(
+                    urllib.urlopen(
+                        'https://graph.facebok.com/' + comment_id + '/comments',
+                        urllib.urlencode(dict(message=message,
+                                              access_token=access_token))))
+
+            raise ValueError(resp)
     return comment
 
 
@@ -32,7 +41,7 @@ def PollPartyTask(user, since=0):
     posts = [p for p in resp['data']]
     comments = [p for p in posts if 'message' in p]
 
-    [process_comment(c) for c in comments]
+    [process_comment(access_token, c) for c in comments]
 
     # Reschedule next execution
     time.sleep(5)

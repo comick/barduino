@@ -9,10 +9,10 @@ from app.weblib.request_decorators import authorized
 from app.weblib.utils import jsonify
 
 
-class DrinksController(CookieAuthorizableController):
+class BirriController(CookieAuthorizableController):
     @authorized
     def GET(self):
-        return jsonify(drinks=[{
+        return jsonify(birri=[{
             'name': t[0],
             'percentages': t[1]
         } for t in DRINKS])

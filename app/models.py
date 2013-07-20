@@ -36,3 +36,11 @@ class User(Base):
     id = Column(String, default=uuid, primary_key=True)
     token = Column(String)
     party_id = Column(String)
+
+
+class Request(Base):
+    __tablename__ = 'request'
+
+    id = Column(String, default=uuid, primary_key=True)
+    comment_id = Column(String)
+    served = Column(Boolean)
