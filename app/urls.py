@@ -2,8 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from app.controllers import IndexController
+from app.controllers import QController
 from app.controllers import SettingsPartiesController
 from app.controllers import SettingsTubiController
+from app.controllers import StartController
 from app.controllers.auth import LoginAuthorizedController
 from app.controllers.auth import LoginController
 from app.controllers.parties  import PartiesController
@@ -22,4 +24,6 @@ URLS = (
     '/settings/tubi', SettingsTubiController,
     '/tubi', TubiController,
     '/drinks', DrinksController,
+    '/start', StartController,
+    '/q', QController
 )
