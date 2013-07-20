@@ -28,8 +28,10 @@ class PartiesController(CookieAuthorizableController):
 
 class SelectPartyController(CookieAuthorizableController):
     @authorized
-    def POST(self):
+    def GET(self):
         user = self.current_user
         user.party_id = web.input(party_id=None).party_id
-        web.ctx.session.merge(user)
+
+        web.ctx.orm.add(user)
+        web.ctx.orm.commit()
         raise web.found('/settings/tubi')
