@@ -71,16 +71,41 @@
         var items = [];
 
         $.each(data['parties'], function (key, val) {
-            console.log(key);
-            console.log(val);
-            items.push('<li id="' + val['id'] + '"><a href="#ds"><img style="height: 64px" src="' + val['photo'] + '" />' + ' ' + val['name'] + '</a></li>');
+            var elem = $('<li>', {
+                id: val['id'],
+                html: $('<a>', {
+                    href: '#null',
+                    html: $('<img>', {
+                        style: 'height: 64px',
+                        src: val['photo']
+                    })
+                }).append(' ' + val['name'])
+            })
+
+            elem.click(function (ev) {
+
+                console.log('fsdgsd')
+                form = $('<form>', {
+                    method: 'POST',
+                    action: '/parties/select',
+                    html: $('<input>', {
+                        name: 'party_id',
+                        value: val['id']
+                    })
+                });
+
+
+                form[0].submit(function (ev) {
+                    window.alert('mastocazzo??')
+                    return true;
+                })
+                console.log(form);
+            });
+            $('#parties').append(elem[0]);
         });
-    console.log(items);
-        $('#parties').html(items.join(''));
     });
 
 </script>
 
 </body>
 </html>
-
