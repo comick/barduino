@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Bootstrap, from Twitter</title>
+    <title>Barduino / Parties</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -65,16 +65,14 @@
 
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-
 <script type="text/javascript">
     $.getJSON('/parties', function (data) {
-        var items = [];
-
         $.each(data['parties'], function (key, val) {
+                         
             var elem = $('<li>', {
-                id: val['id'],
                 html: $('<a>', {
                     href: '#null',
+                html: $('<form method="POST" action="/parties/select">', {
                     html: $('<img>', {
                         style: 'height: 64px',
                         src: val['photo']
