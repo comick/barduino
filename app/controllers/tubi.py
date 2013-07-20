@@ -12,19 +12,15 @@ class TubiController(CookieAuthorizableController):
     @authorized
     def GET(self):
         return jsonify(tubi=[{
-            'id': 0,
-            'event_id': 'id1',
+            'index': 0,
             'bibendus': 'Gin',
         }, {
-            'id': 1,
-            'event_id': 'id1',
+            'index': 1,
             'bibendus': 'Aperol',
         }, {
-            'id': 2,
-            'event_id': 'id1',
+            'index': 2,
             'bibendus': 'Campari',
         }, {
-            'id': 3,
-            'event_id': 'id1',
+            'index': 3,
             'bibendus': 'Red-bull',
         }])
