@@ -83,8 +83,6 @@
             })
 
             elem.click(function (ev) {
-
-                console.log('fsdgsd')
                 form = $('<form>', {
                     method: 'POST',
                     action: '/parties/select',
@@ -94,12 +92,9 @@
                     })
                 });
 
-
                 form[0].submit(function (ev) {
-                    window.alert('mastocazzo??')
                     return true;
                 })
-                console.log(form);
             });
             $('#parties').append(elem[0]);
         });
