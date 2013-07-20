@@ -42,5 +42,6 @@ class Request(Base):
     __tablename__ = 'request'
 
     id = Column(String, default=uuid, primary_key=True)
+    party_id = Column(String)
     comment_id = Column(String)
     served = Column(Boolean)
