@@ -24,6 +24,6 @@ class IndexController(ParamAuthorizableController):
         return web.ctx.render.index()
 
 
-class PartiesController(ParamAuthorizableController):
+class SettingsPartiesController(ParamAuthorizableController):
     def GET(self):
         return web.ctx.render.parties()
