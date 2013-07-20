@@ -35,3 +35,4 @@ class User(Base):
 
     id = Column(String, default=uuid, primary_key=True)
     token = Column(String)
+    party_id = Column(String)
