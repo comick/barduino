@@ -43,4 +43,4 @@ class StartController(CookieAuthorizableController):
 class QController(CookieAuthorizableController):
     @authorized
     def GET(self):
-        pass
+        return web.ctx.render.q()

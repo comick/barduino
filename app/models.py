@@ -46,3 +46,4 @@ class Request(Base):
     comment_id = Column(String)
     birro = Column(String)
     served = Column(Boolean)
+    created = Column(DateTime, default=datetime.now)

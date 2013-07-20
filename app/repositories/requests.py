@@ -10,7 +10,8 @@ class RequestsRepository(object):
     @staticmethod
     def pending():
         return [expunged(r, Request.session)
-                for r in Request.query.filter(Request.served == False).all()]
+                for r in Request.query.filter(Request.served == False)\
+                        .order_by(Request.created.desc()).all()]
 
     @staticmethod
     def add(party_id, comment_id, birro):
