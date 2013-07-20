@@ -28,7 +28,7 @@ class PartiesController(CookieAuthorizableController):
 
 class SelectPartyController(CookieAuthorizableController):
     @authorized
-    def GET(self):
+    def POST(self):
         user = self.current_user
         user.party_id = web.input(party_id=None).party_id
 
