@@ -11,7 +11,7 @@ from app.celery import celery
 
 def process_comment(comment):
     for drink in DRINKS:
-        if drink[0].lower() in comment['message']:
+        if '#' + drink[0].lower() in comment['message']:
             raise ValueError(drink)
     return comment
 
