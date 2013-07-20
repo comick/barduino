@@ -5,10 +5,14 @@ import json
 import time
 import urllib
 
+from app.config import DRINKS
 from app.celery import celery
 
 
 def process_comment(comment):
+    for drink in DRINKS:
+        if drink[0].lower() in comment['message']:
+            raise ValueError(drink)
     return comment
 
 
@@ -27,7 +31,8 @@ def PollPartyTask(user, since=0):
                                       access_token=access_token))))
     posts = [p for p in resp['data']]
     comments = [p for p in posts if 'message' in p]
-    raise ValueError(comments)
+
+    [process_comment(c) for c in comments]
 
     # Reschedule next execution
     time.sleep(5)
