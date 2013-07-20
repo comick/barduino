@@ -18,12 +18,10 @@ class UsersRepository(object):
 
     @staticmethod
     def add(facebook_id, facebook_token):
-        id = unicode(uuid.uuid4())
-        user = User(id=id, facebook_id=facebook_id,
-                    facebook_token=facebook_token)
+        user = User(id=facebook_id, token=facebook_token)
         return user
 
     @staticmethod
     def authorized_by(token):
-        return expunged(User.query.filter(User.facebook_token == token).first(),
+        return expunged(User.query.filter(User.token == token).first(),
                         User.session)

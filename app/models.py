@@ -34,5 +34,4 @@ class User(Base):
     __tablename__ = 'user'
 
     id = Column(String, default=uuid, primary_key=True)
-    facebook_id = Column(String)
-    facebook_token = Column(String)
+    token = Column(String)
