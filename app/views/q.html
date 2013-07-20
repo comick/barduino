@@ -69,17 +69,12 @@
         var items = [];
 
         $.each(data['requests'], function (key, val) {
-            var elem = $('<li>', {
-                html: $('<a>', {
-                    href: '#null',
-                    html: $('<img>', {
-                        style: 'height: 64px',
-                        src: val['avatar']
-                    })
-                }).append(' ' + val['name'])
-                .append(' ' + val['message'])
-            })
-            $('#requests').append(elem[0]);
+            $('#requests').append(
+                '<tr>' +
+                '  <td><img style="height: 64px" src="' + val['avatar'] + '" /></td>' +
+                '  <td><span>' + val['name'] + '</span></td>' +
+                '  <td><span>' + val['message'] + '</span></td>' +
+                '</tr>');
         });
     });
 

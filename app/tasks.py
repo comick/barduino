@@ -20,11 +20,11 @@ def generate_message(pending):
     return message % dict(pending=pending)
 
 
-def process_comment(access_token, party_id, comment, added):
+def process_comment(access_token, party_id, post, added):
     for drink in DRINKS:
-        if drink[0].lower() in comment['message']:
+        if drink[0].lower() in post['message']:
             # Comment
-            comment_id = comment['id']
+            comment_id = post['id']
             pending = len(RequestsRepository.pending()) + added
             resp = json.load(
                     urllib.urlopen(
@@ -32,7 +32,10 @@ def process_comment(access_token, party_id, comment, added):
                         urllib.urlencode(dict(message=generate_message(pending),
                                               access_token=access_token))))
             # Add new request
-            return RequestsRepository.add(party_id, comment['id'], drink[0])
+            return RequestsRepository.add(party_id, post['id'],
+                                          post['from']['id'],
+                                          post['from']['name'],
+                                          post['message'], drink[0])
 
 
 @celery.task
@@ -45,7 +48,7 @@ def PollPartyTask(user, since=0):
     resp = json.load(
             urllib.urlopen(
                 'https://graph.facebok.com/' + party_id + '/feed?' +
-                urllib.urlencode(dict(fields='comments,message',
+                urllib.urlencode(dict(fields='comments,message,from',
                                       date_format='U',
                                       since=since,
                                       access_token=access_token))))

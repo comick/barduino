@@ -14,8 +14,9 @@ class RequestsRepository(object):
                         .order_by(Request.created.desc()).all()]
 
     @staticmethod
-    def add(party_id, comment_id, birro):
+    def add(party_id, comment_id, from_id, from_name, message, birro):
         id = uuid()
-        request = Request(id=id, party_id=party_id,
-                          comment_id=comment_id, birro=birro, served=False)
+        request = Request(id=id, party_id=party_id, comment_id=comment_id,
+                          from_id=from_id, from_name=from_name, message=message,
+                          birro=birro, served=False)
         return request
