@@ -10,10 +10,7 @@ from app.weblib.db import expunged
 class UsersRepository(object):
     @staticmethod
     def get(id):
-        return expunged(User.query.options(joinedload('driver'),
-                                           joinedload('passenger')).\
-                                filter(User.deleted == False).\
-                                filter(User.id == id).first(),
+        return expunged(User.query.filter(User.id == id).first(),
                         User.session)
 
     @staticmethod

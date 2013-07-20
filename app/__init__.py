@@ -21,7 +21,8 @@ web.config.DATABASE_URL = config.DATABASE_URL
 
 web.config.DISABLE_HTTP_ACCEPT_CHECK = config.DISABLE_HTTP_ACCEPT_CHECK
 
-web.config.TITANIUM_KEY = config.TITANIUM_KEY
+web.config.FACEBOOK_APP_ID = config.FACEBOOK_APP_ID
+web.config.FACEBOOK_APP_SECRET = config.FACEBOOK_APP_SECRET
 
 
 def app_factory():

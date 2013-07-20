@@ -1,4 +1,4 @@
-APP_NAME = 'poolit'
+APP_NAME = 'barduino'
 TAG = '0.0.1'
 
 DEBUG = False
@@ -12,7 +12,8 @@ LOG_FORMAT = '[%(process)d] %(levelname)s %(message)s [in %(pathname)s:%(lineno)
 
 DATABASE_URL = 'sqlite:///appdb.sqlite'
 
-TITANIUM_KEY = 'XXX'
+FACEBOOK_APP_ID = '387916474643695'
+FACEBOOK_APP_SECRET = '6b62f2179f9fb7b6a420dea515ee74ea'
 
 DISABLE_HTTP_ACCEPT_CHECK = False
 
