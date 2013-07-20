@@ -11,21 +11,28 @@ from app.repositories.requests import RequestsRepository
 from app.weblib.db import create_session
 
 
+def generate_message(pending):
+    if not pending:
+        return 'No pending requests! '\
+               'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfQs6py2RHKlPNUumcG20b5zGYIyH3tAfMJk6l-EArqQs2iFGv'
+    message = '%(pending)s pending requests! '\
+              'http://clipartist.info/RSS/png/y_u_no_guy_y_u_no-1331px.png'
+    return message % dict(pending=pending)
+
+
 def process_comment(access_token, party_id, comment, added):
     for drink in DRINKS:
         if drink[0].lower() in comment['message']:
             # Comment
             comment_id = comment['id']
-            message = 'Cristo! (%(pending)s pending requests!)'
             pending = len(RequestsRepository.pending()) + added
-            message = message % dict(pending=pending)
             resp = json.load(
                     urllib.urlopen(
                         'https://graph.facebok.com/' + comment_id + '/comments',
-                        urllib.urlencode(dict(message=message,
+                        urllib.urlencode(dict(message=generate_message(pending),
                                               access_token=access_token))))
             # Add new request
-            return RequestsRepository.add(party_id, comment['id'])
+            return RequestsRepository.add(party_id, comment['id'], drink[0])
 
 
 @celery.task

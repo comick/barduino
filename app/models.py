@@ -44,4 +44,5 @@ class Request(Base):
     id = Column(String, default=uuid, primary_key=True)
     party_id = Column(String)
     comment_id = Column(String)
+    birro = Column(String)
     served = Column(Boolean)
