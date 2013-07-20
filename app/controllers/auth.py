@@ -26,13 +26,17 @@ class LoginController():
 
 class LoginAuthorizedController(CookieAuthorizableController):
     def GET(self):
-        user = UsersRepository.add('fake_id', 'fake_token')
-        web.ctx.orm.add(user)
-        web.ctx.orm.commit()
-        # Merge fying and persistent object: this enables us to read the
-        # automatically generated user id
-        user = web.ctx.orm.merge(user)
+        id = 'fake_id'
+        token = 'fake_token'
+        user = UsersRepository.authorized_by(token)
+        if user is None:
+            user = UsersRepository.add('fake_id', 'fake_token')
+            web.ctx.orm.add(user)
+            web.ctx.orm.commit()
+            # Merge fying and persistent object: this enables us to read the
+            # automatically generated user id
+            user = web.ctx.orm.merge(user)
 
         web.setcookie('token', user.token)
 
-        raise web.found('/parties')
+        raise web.found('/settings/parties')
