@@ -48,28 +48,42 @@
 
 <div class="container">
 
-    <h1>Q</h1>
+    <h1>Queued requests</h1>
+
+    <div>
+        <ul class="nav nav-pills nav-stacked" id="requests">
+        </ul>
+    </div>
 
 </div>
 <!-- /container -->
 
 <!-- Le javascript
 ================================================== -->
+
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="static/bootstrap/js/jquery.js"></script>
-<script src="static/bootstrap/js/bootstrap-transition.js"></script>
-<script src="static/bootstrap/js/bootstrap-alert.js"></script>
-<script src="static/bootstrap/js/bootstrap-modal.js"></script>
-<script src="static/bootstrap/js/bootstrap-dropdown.js"></script>
-<script src="static/bootstrap/js/bootstrap-scrollspy.js"></script>
-<script src="static/bootstrap/js/bootstrap-tab.js"></script>
-<script src="static/bootstrap/js/bootstrap-tooltip.js"></script>
-<script src="static/bootstrap/js/bootstrap-popover.js"></script>
-<script src="static/bootstrap/js/bootstrap-button.js"></script>
-<script src="static/bootstrap/js/bootstrap-collapse.js"></script>
-<script src="static/bootstrap/js/bootstrap-carousel.js"></script>
-<script src="static/bootstrap/js/bootstrap-typeahead.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $.getJSON('/requests', function (data) {
+        var items = [];
+
+        $.each(data['requests'], function (key, val) {
+            var elem = $('<li>', {
+                html: $('<a>', {
+                    href: '#null',
+                    html: $('<img>', {
+                        style: 'height: 64px',
+                        src: val['avatar']
+                    })
+                }).append(' ' + val['name'])
+                .append(' ' + val['message'])
+            })
+            $('#requests').append(elem[0]);
+        });
+    });
+
+</script>
 
 </body>
 </html>
-
