@@ -39,7 +39,7 @@ class LoginController():
                 dict(client_id=web.config.FACEBOOK_APP_ID,
                      redirect_uri=web.ctx.path_url,
                      response_type='code',
-                     scope='')))
+                     scope='user_events')))
 
         consumer = oauth2.Consumer(web.config.FACEBOOK_APP_ID,
                                    web.config.FACEBOOK_APP_SECRET)

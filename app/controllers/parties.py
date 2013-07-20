@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import json
+import urllib
 import web
 
 from app.controllers import CookieAuthorizableController
@@ -11,15 +13,17 @@ from app.weblib.utils import jsonify
 class PartiesController(CookieAuthorizableController):
     @authorized
     def GET(self):
+        access_token = self.current_user.token
+        resp = json.load(
+                urllib.urlopen(
+                    'https://graph.facebook.com/me?' +
+                    urllib.urlencode(dict(fields='events.fields(name,cover)',
+                                          access_token=access_token))))
         return jsonify(parties=[{
-            'id': 'id1',
-            'photo': 'http://www.petfinder.com/wp-content/uploads/2012/11/101418789-cat-panleukopenia-fact-sheet-632x475.jpg',
-            'name': 'Name 1'
-        }, {
-            'id': 'id2',
-            'photo': 'http://www.catster.com/files/short-hair-cat-01-shutterstock_129341936.jpg',
-            'name': 'Name 2'
-        }])
+            'id': e['id'],
+            'name': e['name'],
+            'photo': e['cover']['source'] if 'cover' in e else None
+        } for e in resp['events']['data']])
 
 
 class SelectPartyController(CookieAuthorizableController):
