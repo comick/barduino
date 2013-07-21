@@ -92,8 +92,13 @@
 
     $.getJSON('/birri', function (data) {
         $.each(data['birri'], function (key, val) {
+            var recipe = $('<ul>', {
+               html: $('<li>')
+            });
+
+
             var elem = $('<li>', {
-                id: val['index'],
+                id: val['name'],
                 html: $('<a>', {
                     href: '#null',
                     html: val['bibendus']
