@@ -6,6 +6,17 @@ body {
     text-align: center;
 }
 
-td {
+td, th {
     text-align: center !important;
+    vertical-align: middle !important;
+}
+
+blockquote {
+    text-align: left;
+    vertical-align: middle !important;
+    margin: 0px;
+}
+
+.message {
+    
 }

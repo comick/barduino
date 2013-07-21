@@ -25,7 +25,7 @@ class PartiesController(CookieAuthorizableController):
             'photo': e['cover']['source'] if 'cover' in e else None,
             'location': e['location'],
             'start_time': e['start_time']
-        } for e in resp['events']['data']])
+        } for e in reversed(resp['events']['data'])])
 
 
 class SelectPartyController(CookieAuthorizableController):

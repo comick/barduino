@@ -31,7 +31,8 @@
 <body>
 <div class="container">
     <h1>Queued requests</h1>
-
+    <br />
+    <br />
     <div>
         <table class="table table-striped" id="requests">
         </table>
@@ -55,13 +56,15 @@
             $.each(data['requests'], function (key, val) {
                 $('#requests').append(
                         '<tr>' +
-                                '  <td><img style="height: 64px" src="' + val['avatar'] + '" /></td>' +
-                                '  <td>' +
-                                '    <span>' + val['name'] + ':</span></br></br>' +
-                                '    <span>&lt;&lt;' + val['message'] + '&gt;&gt;</span>' +
-                                '  </td>' +
-                                '  <td><span><strong>' + val['birro'] + '</strong></span></td>' +
-                                '</tr>');
+                        '  <td><img style="height: 64px" src="' + val['avatar'] + '" /></td>' +
+                        '  <td>' +
+                        '    <blockquote>' +
+                        '      <p>' + val['message'] + '</p>' +
+                        '      <p><small>' + val['name'] + '</small></p>' +
+                        '    </blockquote>' +
+                        '  </td>' +
+                        '  <td><h4>' + val['birro'] + '</h4></td>' +
+                        '</tr>');
             });
             setTimeout(requester, 2000);
         });

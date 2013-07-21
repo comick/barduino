@@ -28,10 +28,12 @@
 <body>
 <div class="container">
     <h1>Tubi & Birri</h1>
+    <br/>
+    <br/>
     <div>
         <table class="table table-striped" id="tubi">
             <thead>
-                <tr><td>&nbsp;</td></tr>
+                <tr><th>&nbsp;</th></tr>
             </thead>
             <tbody>
             </tbody>
@@ -52,7 +54,7 @@
     $.getJSON('/tubi', function (data) {
         $.each(data['tubi'], function (key, val) {
             $('#tubi thead tr').append(
-                '<td><span>' + val['bibendus'] + '</span></td>');
+                '<th><span>' + val['bibendus'] + '</span></th>');
         });
     });
     $.getJSON('/birri', function (data) {

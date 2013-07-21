@@ -93,8 +93,7 @@ def serial_message(birro):
 
 def serial_do(birro):
     # Serial
-    ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=2)
-    ser.open()
+    ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1000000)
     ser.setDTR(False)
     time.sleep(2)
     ser.flushInput()

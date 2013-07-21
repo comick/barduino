@@ -28,8 +28,10 @@
 <body>
 <div class="container">
     <h1>Ongoing parties</h1>
+    <p>Select the party to monitor!</p>
+    <br/>
+    <br/>
     <div>
-        <p>Select the party to monitor!</p>
         <table class="table table-hover" id="parties">
         </table>
     </div>
@@ -47,28 +49,28 @@
         $.each(data['parties'], function (key, val) {
             $('#parties').append(
                 $('<tr>').append(
-                    $('<td colspan="3">').append(
+                    $('<td width="25%">').append(
                         $('<img style="height: 64px" src="' + val['photo'] + '">')
                     )
                 ).append(
-                    $('<td colspan="3">').append(
+                    $('<td width="25%">').append(
                         $('<h3>').append(val['name'])
                     )
                 ).append(
-                    $('<td colspan="3">').append(
+                    $('<td width="25%">').append(
                         $('<span>').append(val['location'])
                     )
                 ).append(
-                    $('<td colspan="3">').append(
-                        $('<span>').append(val['start_time'])
+                    $('<td width="25%">').append(
+                        $('<span class="muted">').append(val['start_time'])
                     )
                 ).append(
-                    $('<form action="/parties/select" method="POST">').append(
+                    $('<form id="' + val['id'] + '" action="/parties/select" method="POST">').append(
                         $('<input type="hidden" name="party_id" value="' + val['id'] + '">')
                     )
                 )
             );
-            $('#parties').last().click(function (ev) {
+            $('#parties tr').last().click(function (ev) {
                 $(this).find('form').submit();
             });
         });
