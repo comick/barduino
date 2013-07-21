@@ -29,6 +29,7 @@
 <div class="container">
     <h1>Ongoing parties</h1>
     <div>
+        <p>Select the party to monitor!</p>
         <table class="table table-hover" id="parties">
         </table>
     </div>
@@ -46,12 +47,14 @@
         $.each(data['parties'], function (key, val) {
             $('#parties').append(
                 '<tr>' +
-                '  <form action="/parties/select" method="POST">' +
-                '    <input type="hidden" name="party_id" value="' + val['id'] + '" />' +
-                '  </form>' +
                 '  <a>' +
                 '    <td><img style="height: 64px" src="' + val['photo'] + '" /></td>' +
-                '    <td><span>' + val['name'] + '</span></td>' +
+                '    <td><h3>' + val['name'] + '</h3></td>' +
+                '    <td><span>' + val['location'] + '</span></td>' +
+                '    <td><span>' + val['start_time'] + '</span></td>' +
+                '    <form action="/parties/select" method="POST">' +
+                '      <input type="hidden" name="party_id" value="' + val['id'] + '" />' +
+                '    </form>' +
                 '  </a>' +
                 '</tr>');
             $('#parties').last().click(function (ev) {
