@@ -34,6 +34,8 @@ class User(Base):
     __tablename__ = 'user'
 
     id = Column(String, default=uuid, primary_key=True)
+    name = Column(String)
+    avatar = Column(String)
     token = Column(String)
     party_id = Column(String)
 

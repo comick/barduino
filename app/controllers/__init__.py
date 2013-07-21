@@ -18,19 +18,21 @@ class CookieAuthorizableController(AbstractCookieAuthorizableController):
 
 class IndexController(CookieAuthorizableController):
     def GET(self):
+        if self.current_user:
+            raise web.found('/settings/parties')
         return web.ctx.render.index()
 
 
 class SettingsPartiesController(CookieAuthorizableController):
     @authorized
     def GET(self):
-        return web.ctx.render.parties()
+        return web.ctx.render.parties(user=self.current_user)
 
 
 class SettingsTubiController(CookieAuthorizableController):
     @authorized
     def GET(self):
-        return web.ctx.render.tubi()
+        return web.ctx.render.tubi(user=self.current_user)
 
 
 class StartController(CookieAuthorizableController):
@@ -43,4 +45,4 @@ class StartController(CookieAuthorizableController):
 class QController(CookieAuthorizableController):
     @authorized
     def GET(self):
-        return web.ctx.render.q()
+        return web.ctx.render.q(user=self.current_user)

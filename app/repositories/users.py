@@ -14,8 +14,8 @@ class UsersRepository(object):
                         User.session)
 
     @staticmethod
-    def add(facebook_id, facebook_token):
-        user = User(id=facebook_id, token=facebook_token)
+    def add(facebook_id, name, avatar, token):
+        user = User(id=facebook_id, name=name, avatar=avatar, token=token)
         return user
 
     @staticmethod

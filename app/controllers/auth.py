@@ -73,7 +73,10 @@ class LoginAuthorizedController(CookieAuthorizableController):
 
         user = UsersRepository.get(profile['id'])
         if not user:
-            user = UsersRepository.add(profile['id'], access_token)
+            avatar = 'https://graph.facebook.com/%(id)s/picture?type=large' 
+            avatar = avatar % dict(id=profile['id'])
+            user = UsersRepository.add(profile['id'], profile['name'],
+                                       avatar, access_token)
         user.token = access_token
 
         web.ctx.orm.add(user)
