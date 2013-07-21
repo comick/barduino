@@ -46,17 +46,28 @@
     $.getJSON('/parties', function (data) {
         $.each(data['parties'], function (key, val) {
             $('#parties').append(
-                '<tr>' +
-                '  <a>' +
-                '    <td><img style="height: 64px" src="' + val['photo'] + '" /></td>' +
-                '    <td><h3>' + val['name'] + '</h3></td>' +
-                '    <td><span>' + val['location'] + '</span></td>' +
-                '    <td><span>' + val['start_time'] + '</span></td>' +
-                '    <form action="/parties/select" method="POST">' +
-                '      <input type="hidden" name="party_id" value="' + val['id'] + '" />' +
-                '    </form>' +
-                '  </a>' +
-                '</tr>');
+                $('<tr>').append(
+                    $('<td>').append(
+                        $('<img style="height: 64px" src="' + val['photo'] + '">')
+                    )
+                ).append(
+                    $('<td>').append(
+                        $('<h3>').append(val['name'])
+                    )
+                ).append(
+                    $('<td>').append(
+                        $('<span>').append(val['location'])
+                    )
+                ).append(
+                    $('<td>').append(
+                        $('<span>').append(val['start_time'])
+                    )
+                ).append(
+                    $('<form action="/parties/select" method="POST">').append(
+                        $('<input type="hidden" name="party_id" value="' + val['id'] + '">')
+                    )
+                )
+            );
             $('#parties').last().click(function (ev) {
                 $(this).find('form').submit();
             });
