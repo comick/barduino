@@ -5,6 +5,8 @@ import json
 import time
 import urllib
 
+import serial
+
 from app.config import DRINKS
 from app.celery import celery
 from app.repositories.requests import RequestsRepository
@@ -22,7 +24,7 @@ def generate_message(pending):
 
 def process_comment(access_token, party_id, post, pending):
     for drink in DRINKS:
-        if drink[0].lower() in post['message']:
+        if drink[0].lower() in post['message'].lower():
             # Comment
             comment_id = post['id']
             resp = json.load(
@@ -71,15 +73,49 @@ def PollPartyTask(user):
         since = posts[0]['created_time'] if posts else since
 
 
+def hexPrint(mess):
+    ret = ''
+    for i in mess:
+        ret = ret + hex(ord(i)) + ', '
+    print ret
+
+
+def serial_message(birro):
+    msg = ';'
+    for (name, percentage) in DRINKS:
+        if name == birro:
+            not_zero = [(i, p) for (i, p) in enumerate(percentage) if p]
+            msg += chr(len(not_zero))
+            for (i, p) in not_zero:
+                msg += chr(i) + chr(int(p * 100))
+    return msg
+
+
 @celery.task
 def MakeBirroTask(access_token, request_id):
     session = create_session()
     request = RequestsRepository.get(request_id)
+
+    # Send a facebook comment
     resp = json.load(
             urllib.urlopen(
                 'https://graph.facebok.com/' + request.comment_id + '/comments',
                 urllib.urlencode(dict(message='Come here!',
                     access_token=access_token))))
+
+    # Serial
+    #ser = serial.Serial('/dev/tty.usbserial-A7006Rbx', 115200)
+    #ser.open()
+    #ser.setDTR(False)
+    #time.sleep(2)
+    #ser.flushInput()
+    msg = serial_message(request.birro)
+    hexPrint(msg)
+    #ser.write(msg)
+    #response = ser.read(512)  # read up to ten bytes (timeout)
+    #ser.close()
+
+    # Mark request as served
     request.served = True
     session.add(request)
     session.commit()
