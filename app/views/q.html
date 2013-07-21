@@ -18,9 +18,12 @@
     <![endif]-->
 
     <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="static/bootstrap/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="static/bootstrap/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="static/bootstrap/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
+          href="static/bootstrap/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114"
+          href="static/bootstrap/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72"
+          href="static/bootstrap/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="static/bootstrap/ico/apple-touch-icon-57-precomposed.png">
     <link rel="shortcut icon" href="static/bootstrap/ico/favicon.png">
 </head>
@@ -28,6 +31,7 @@
 <body>
 <div class="container">
     <h1>Queued requests</h1>
+
     <div>
         <table class="table table-striped" id="requests">
         </table>
@@ -42,21 +46,27 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-    $.getJSON('/requests', function (data) {
-        var items = [];
 
-        $.each(data['requests'], function (key, val) {
-            $('#requests').append(
-                '<tr>' +
-                '  <td><img style="height: 64px" src="' + val['avatar'] + '" /></td>' +
-                '  <td>'+
-                '    <span>' + val['name'] + ':</span></br></br>' +
-                '    <span>&lt;&lt;' + val['message'] + '&gt;&gt;</span>' +
-                '  </td>' +
-                '  <td><span><strong>' + val['birro'] + '</strong></span></td>' +
-                '</tr>');
+    (function requester() {
+        $.getJSON('/requests', function (data) {
+            var items = [];
+
+            $('#requests').html('');
+            $.each(data['requests'], function (key, val) {
+                $('#requests').append(
+                        '<tr>' +
+                                '  <td><img style="height: 64px" src="' + val['avatar'] + '" /></td>' +
+                                '  <td>' +
+                                '    <span>' + val['name'] + ':</span></br></br>' +
+                                '    <span>&lt;&lt;' + val['message'] + '&gt;&gt;</span>' +
+                                '  </td>' +
+                                '  <td><span><strong>' + val['birro'] + '</strong></span></td>' +
+                                '</tr>');
+            });
+            setTimeout(requester, 2000);
         });
-    });
+    })();
+
 </script>
 
 </body>
