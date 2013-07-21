@@ -8,6 +8,11 @@ from app.weblib.db import uuid
 
 class RequestsRepository(object):
     @staticmethod
+    def get(id):
+        return expunged(Request.query.filter(Request.id == id).first(),
+                        Request.session)
+
+    @staticmethod
     def pending():
         return [expunged(r, Request.session)
                 for r in Request.query.filter(Request.served == False)\
