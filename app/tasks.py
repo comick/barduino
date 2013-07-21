@@ -58,7 +58,7 @@ def PollPartyTask(user):
 
         pending = len(RequestsRepository.pending())
         requests_to_add = []
-        for c in comments:
+        for c in reversed(comments): # From oldest, to newest
             r = process_comment(access_token, party_id, c, pending)
             if r is not None:
                 requests_to_add.append(r)
