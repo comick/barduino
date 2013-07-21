@@ -9,12 +9,8 @@
 
     <!-- Le styles -->
     <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <style>
-        body {
-            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-        }
-    </style>
     <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/static/css/main.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -22,37 +18,16 @@
     <![endif]-->
 
     <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144"
-          href="/static/bootstrap/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114"
-          href="/static/bootstrap/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72"
-          href="/static/bootstrap/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/static/bootstrap/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/static/bootstrap/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static/bootstrap/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="/static/bootstrap/ico/apple-touch-icon-57-precomposed.png">
     <link rel="shortcut icon" href="/static/bootstrap/ico/favicon.png">
 </head>
 
 <body>
-
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="brand" href="#">Barduino</a>
-
-            <!--/.nav-collapse -->
-        </div>
-    </div>
-</div>
-
 <div class="container">
-
     <h1>Ongoing parties</h1>
-
     <div>
         <table class="table table-striped" id="parties">
         </table>
@@ -65,43 +40,23 @@
 
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     $.getJSON('/parties', function (data) {
-        var items = [];
-
         $.each(data['parties'], function (key, val) {
-                         
-            var elem = $('<li>', {
-                html: $('<a>', {
-                    href: '#null',
-                    html: $('<img>', {
-                        style: 'height: 64px',
-                        src: val['photo']
-                    })
-                }).append(' ' + val['name'])
-            })
-
-            elem.click(function (ev) {
-
-                console.log('fsdgsd')
-                form = $('<form>', {
-                    method: 'POST',
-                    action: '/parties/select',
-                    html: $('<input>', {
-                        name: 'party_id',
-                        value: val['id']
-                    })
-                });
-
-
-                form[0].submit(function (ev) {
-                    window.alert('mastocazzo??')
-                    return true;
-                })
-                console.log(form);
+            $('#parties').append(
+                '<tr>' +
+                '  <form action="/parties/select" method="POST">' +
+                '    <input type="hidden" name="party_id" value="' + val['id'] + '" />' +
+                '  </form>' +
+                '  <a>' +
+                '    <td><img style="height: 64px" src="' + val['photo'] + '" /></td>' +
+                '    <td><span>' + val['name'] + '</span></td>' +
+                '  </a>' +
+                '</tr>');
+            $('#parties').last().click(function (ev) {
+                $(this).find('form').submit();
             });
-            $('#parties').append(elem[0]);
         });
     });
 

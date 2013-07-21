@@ -16,6 +16,7 @@ class RequestsController(CookieAuthorizableController):
     @authorized
     def GET(self):
         return jsonify(requests=[{
+            'birro': r.birro,
             'name': r.from_name,
             'avatar': 'https://graph.facebook.com/%(id)s/picture?type=large' % dict(id=r.from_id),
             'message': r.message

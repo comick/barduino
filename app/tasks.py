@@ -20,12 +20,11 @@ def generate_message(pending):
     return message % dict(pending=pending)
 
 
-def process_comment(access_token, party_id, post, added):
+def process_comment(access_token, party_id, post, pending):
     for drink in DRINKS:
         if drink[0].lower() in post['message']:
             # Comment
             comment_id = post['id']
-            pending = len(RequestsRepository.pending()) + added
             resp = json.load(
                     urllib.urlopen(
                         'https://graph.facebok.com/' + comment_id + '/comments',
@@ -55,12 +54,12 @@ def PollPartyTask(user, since=0):
     posts = [p for p in resp['data']]
     comments = [p for p in posts if 'message' in p]
 
-    added = 0
+    pending = len(RequestsRepository.pending())
     for c in comments:
-        r = process_comment(access_token, party_id, c, added)
+        r = process_comment(access_token, party_id, c, pending)
         if r is not None:
             session.add(r)
-            added += 1
+            pending += 1
     session.commit()
 
     # Reschedule next execution
