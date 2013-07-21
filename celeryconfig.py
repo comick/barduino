@@ -7,10 +7,3 @@ CELERY_IMPORTS = ('app.tasks',)
 
 BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-
-CELERYBEAT_SCHEDULE = {
-    #'deactivate-passengers-every-morning': {
-        #'task': 'app.tasks.DeactivateActivePassengers',
-        #'schedule': crontab(hour=5, minute=0)
-    #},
-}

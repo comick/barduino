@@ -17,12 +17,14 @@ class PartiesController(CookieAuthorizableController):
         resp = json.load(
                 urllib.urlopen(
                     'https://graph.facebook.com/me?' +
-                    urllib.urlencode(dict(fields='events.fields(name,cover)',
+                    urllib.urlencode(dict(fields='events.fields(name,cover,location)',
                                           access_token=access_token))))
         return jsonify(parties=[{
             'id': e['id'],
             'name': e['name'],
-            'photo': e['cover']['source'] if 'cover' in e else None
+            'photo': e['cover']['source'] if 'cover' in e else None,
+            'location': e['location'],
+            'start_time': e['start_time']
         } for e in resp['events']['data']])
 
 
