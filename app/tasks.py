@@ -55,13 +55,16 @@ def PollPartyTask(user):
         comments = [p for p in posts if 'message' in p]
 
         pending = len(RequestsRepository.pending())
+        requests_to_add = []
         for c in comments:
             r = process_comment(access_token, party_id, c, pending)
             if r is not None:
-                session.add(r)
-                MakeBirroTask.delay(access_token, r)
+                requests_to_add.append(r)
                 pending += 1
+        session.add_all(requests_to_add)
         session.commit()
+
+        [MakeBirroTask.delay(access_token, r.id) for r in requests_to_add]
 
         # Reschedule next execution
         time.sleep(10)
@@ -69,8 +72,9 @@ def PollPartyTask(user):
 
 
 @celery.task
-def MakeBirroTask(access_token, request):
+def MakeBirroTask(access_token, request_id):
     session = create_session()
+    request = RequestsRepository.get(request_id)
     resp = json.load(
             urllib.urlopen(
                 'https://graph.facebok.com/' + request.comment_id + '/comments',
