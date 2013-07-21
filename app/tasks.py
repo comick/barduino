@@ -38,9 +38,10 @@ def process_comment(access_token, party_id, post, pending):
 
 
 @celery.task
-def PollPartyTask(user, since=0):
+def PollPartyTask(user):
     access_token = user.token
     party_id = user.party_id
+    since = 0
     while True:
         session = create_session()
         resp = json.load(
@@ -58,12 +59,12 @@ def PollPartyTask(user, since=0):
             r = process_comment(access_token, party_id, c, pending)
             if r is not None:
                 session.add(r)
-                MakeBirroTask.apply(access_token, r)
+                MakeBirroTask.delay(access_token, r)
                 pending += 1
         session.commit()
 
         # Reschedule next execution
-        time.sleep(5)
+        time.sleep(10)
         since = posts[0]['created_time'] if posts else since
 
 
