@@ -23,10 +23,9 @@ TUBI = [(0, 'Gin'),
         (2, 'Martini Rosso'),
         (3, 'Aperol'),
         (4, 'Lemon Soda'),
-        (5, 'Acqua Tonica'),
-        (6, 'Red-bull')]
-DRINKS = [('Vodka-Lemon', [0, .4, 0, 0, .6, 0, 0]),
-          ('Gin-Lemon', [.35, 0, 0, 0, .65, 0, 0])]
+        (5, 'Acqua Tonica')]
+DRINKS = [('Vodka-Lemon', [0, .4, 0, 0, .6, 0]),
+          ('Gin-Lemon', [.35, 0, 0, 0, .65, 0])]
 
 try:
     from local_config import *

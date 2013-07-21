@@ -47,19 +47,19 @@
         $.each(data['parties'], function (key, val) {
             $('#parties').append(
                 $('<tr>').append(
-                    $('<td>').append(
+                    $('<td colspan="3">').append(
                         $('<img style="height: 64px" src="' + val['photo'] + '">')
                     )
                 ).append(
-                    $('<td>').append(
+                    $('<td colspan="3">').append(
                         $('<h3>').append(val['name'])
                     )
                 ).append(
-                    $('<td>').append(
+                    $('<td colspan="3">').append(
                         $('<span>').append(val['location'])
                     )
                 ).append(
-                    $('<td>').append(
+                    $('<td colspan="3">').append(
                         $('<span>').append(val['start_time'])
                     )
                 ).append(

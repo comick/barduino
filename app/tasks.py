@@ -91,6 +91,20 @@ def serial_message(birro):
     return msg
 
 
+def serial_do(birro):
+    # Serial
+    ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=2)
+    ser.open()
+    ser.setDTR(False)
+    time.sleep(2)
+    ser.flushInput()
+    msg = serial_message(birro)
+    hexPrint(msg)
+    ser.write(msg)
+    ser.read(4)
+    ser.close()
+
+
 @celery.task
 def MakeBirroTask(access_token, request_id):
     session = create_session()
@@ -104,16 +118,7 @@ def MakeBirroTask(access_token, request_id):
                     access_token=access_token))))
 
     # Serial
-    #ser = serial.Serial('/dev/tty.usbserial-A7006Rbx', 115200)
-    #ser.open()
-    #ser.setDTR(False)
-    #time.sleep(2)
-    #ser.flushInput()
-    msg = serial_message(request.birro)
-    hexPrint(msg)
-    #ser.write(msg)
-    #response = ser.read(512)  # read up to ten bytes (timeout)
-    #ser.close()
+    serial_do(request.birro)
 
     # Mark request as served
     request.served = True
