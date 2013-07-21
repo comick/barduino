@@ -18,8 +18,6 @@ class CookieAuthorizableController(AbstractCookieAuthorizableController):
 
 class IndexController(CookieAuthorizableController):
     def GET(self):
-        if self.current_user:
-            raise web.found('/settings/parties')
         return web.ctx.render.index()
 
 
