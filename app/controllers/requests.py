@@ -20,4 +20,4 @@ class RequestsController(CookieAuthorizableController):
             'name': r.from_name,
             'avatar': 'https://graph.facebook.com/%(id)s/picture?type=large' % dict(id=r.from_id),
             'message': r.message
-        } for r in RequestsRepository.pending()])
+        } for r in RequestsRepository.pending(self.current_user.party_id)])

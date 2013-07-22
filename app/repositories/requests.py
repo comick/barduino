@@ -13,9 +13,11 @@ class RequestsRepository(object):
                         Request.session)
 
     @staticmethod
-    def pending():
+    def pending(party_id):
         return [expunged(r, Request.session)
-                for r in Request.query.filter(Request.served == False)\
+                for r in Request.query\
+                        .filter(Request.party_id == party_id)\
+                        .filter(Request.served == False)\
                         .order_by(Request.created.desc()).all()]
 
     @staticmethod
