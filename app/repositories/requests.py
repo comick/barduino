@@ -18,7 +18,7 @@ class RequestsRepository(object):
                 for r in Request.query\
                         .filter(Request.party_id == party_id)\
                         .filter(Request.served == False)\
-                        .order_by(Request.created.desc()).all()]
+                        .order_by(Request.created.asc()).all()]
 
     @staticmethod
     def add(party_id, comment_id, from_id, from_name, message, birro):
